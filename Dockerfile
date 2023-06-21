@@ -1,10 +1,20 @@
 # build stage
-FROM node:16 as build
+FROM node:18 as build
 
 WORKDIR /citizen
 
 COPY package.json .
 COPY package-lock.json .
+
+RUN curl -s https://ngrok-agent.s3.amazonaws.com/ngrok.asc | tee /etc/apt/trusted.gpg.d/ngrok.asc >/dev/null && echo "deb https://ngrok-agent.s3.amazonaws.com buster main" | tee /etc/apt/sources.list.d/ngrok.list && apt update && apt install ngrok
+
+RUN mkdir /root/.ngrok
+
+# ngrok downloads are busted, just copy the cached linux:amd64 binaries
+# into the cache so we don't try to download them
+COPY aHR0cHM6Ly9iaW4uZXF1aW5veC5pby9jL2JOeWoxbVFWWTRjL25ncm9rLXYzLXN0YWJsZS1saW51eC1hbWQ2NC56aXA=.zip /root/.ngrok/aHR0cHM6Ly9iaW4uZXF1aW5veC5pby9jL2JOeWoxbVFWWTRjL25ncm9rLXYzLXN0YWJsZS1saW51eC1hbWQ2NC56aXA=.zip
+COPY aHR0cHM6Ly9iaW4uZXF1aW5veC5pby9jLzRWbUR6QTdpYUhiL25ncm9rLXN0YWJsZS1saW51eC1hbWQ2NC56aXA=.zip /root/.ngrok/aHR0cHM6Ly9iaW4uZXF1aW5veC5pby9jLzRWbUR6QTdpYUhiL25ncm9rLXN0YWJsZS1saW51eC1hbWQ2NC56aXA=.zip
+
 RUN npm install
 
 COPY . .
