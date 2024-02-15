@@ -2,8 +2,8 @@
 const { join, parse } = require('node:path');
 const { readFile, writeFile } = require('node:fs/promises');
 const { Readable } = require('node:stream');
-const mkdirp = require('mkdirp');
-const rimraf = require('rimraf');
+const { mkdirp } = require('mkdirp');
+const { rimraf } = require('rimraf');
 const { expect } = require('chai');
 const { S3Client, PutObjectCommand, GetObjectCommand } = require('@aws-sdk/client-s3');
 const { mockClient } = require('aws-sdk-client-mock');
@@ -167,7 +167,7 @@ storageTypes.forEach((storageType) => {
         'test',
         'fixture',
         'provider',
-        'terraform-provider-null_1.0.0_linux_amd64.zip'
+        'terraform-provider-null_1.0.0_linux_amd64.zip',
       );
       let providerBuf;
 

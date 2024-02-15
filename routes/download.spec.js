@@ -1,8 +1,8 @@
-const request = require('supertest');
-const { expect } = require('chai');
 const fs = require('node:fs');
 const path = require('node:path');
-const rimraf = require('rimraf');
+const request = require('supertest');
+const { expect } = require('chai');
+const { rimraf } = require('rimraf');
 
 const app = require('../app');
 const helper = require('../test/helper');
